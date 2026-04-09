@@ -8,7 +8,7 @@ Everything you need to build a Svelte project, powered by [`sv`](https://github.
 ---
 
 ## Concept & Modes de Jeu
-IroGuess est un jeu de précision chromatique en temps réel (inspiré entre autres de dialed.gg0. Les joueurs s'affrontent sur 5 manches pour obtenir le meilleur score. Le jeu sélectionne aléatoirement un mode à chaque round :
+IroGuess est un jeu de précision chromatique en temps réel (inspiré entre autres de dialed.gg). Les joueurs s'affrontent sur 5 manches pour obtenir le meilleur score. Le jeu sélectionne aléatoirement un mode à chaque round :
 
 * **Mode Classique ** : Mémorisez la couleur et reproduisez-la. Points basés sur la précision.
 * **Mort Subite ** : Seul le joueur le plus proche gagne les points de la manche.
