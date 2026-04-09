@@ -114,7 +114,7 @@ export default class GameServer implements Party.Server {
   };
 
   // 🔥 gestion propre des timers
-  memoTimeout: ReturnType<typeof setTimeout> | null = null;
+  memoTimeout: ReturnType<typeof setTimeout > | null = null;
   pickTimeout: ReturnType<typeof setTimeout> | null = null;
 
   constructor(readonly room: Party.Room) {}
@@ -174,10 +174,12 @@ export default class GameServer implements Party.Server {
     }, memoDuration);
   }
 
-  endPickPhase() {
-    if (this.state.subStatus !== "pick") return;
+  isEndingPhase = false;
 
-    // 🔥 clear timer actif
+  endPickPhase() {
+    if (this.state.subStatus !== "pick" || this.isEndingPhase) return;
+    this.isEndingPhase = true;
+
     if (this.pickTimeout) {
       clearTimeout(this.pickTimeout);
       this.pickTimeout = null;
@@ -192,6 +194,7 @@ export default class GameServer implements Party.Server {
       if (this.state.round >= this.state.maxRounds) {
         this.state.status = "results";
       } else {
+        this.isEndingPhase = false;
         this.startRound();
       }
       this.broadcast();
@@ -258,11 +261,12 @@ export default class GameServer implements Party.Server {
 
     if (data.type === "start" && this.state.status !== "playing") {
       this.state.round = 0;
+      this.isEndingPhase = false;
       Object.values(this.state.players).forEach((p) => (p.score = 0));
       this.startRound();
     }
 
-    if (data.type === "answer" && this.state.subStatus === "pick") {
+    if (data.type === "answer" && this.state.subStatus === "pick" && !this.isEndingPhase) {
       const player = this.state.players[sender.id];
 
       if (player && !player.answer && this.state.currentColor) {
