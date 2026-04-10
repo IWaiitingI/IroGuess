@@ -163,13 +163,23 @@
                                 </p>
                                 
                                 {#if $gameStore.currentMode === 'whos_next' && $gameStore.sequenceColors}
-                                    <div class="flex gap-3 sm:gap-4 items-center scale-90 sm:scale-100">
-                                        {#each $gameStore.sequenceColors as color}
-                                            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-lg border border-white/10" style="background: {color}"></div>
+                                    <div class="flex gap-4 items-center">
+                                        {#each $gameStore.sequenceColors as color, i}
+                                            <div class="flex flex-col items-center gap-3">
+                                                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-lg border border-white/20 shadow-lg" 
+                                                    style="background: {color}"></div>
+                                                <span class="font-mono text-xl opacity-20">{i+1}</span>
+                                            </div>
+                                            {#if i < 2}
+                                                <div class="w-4 h-0.5 bg-white/10 rounded-full"></div>
+                                            {/if}
                                         {/each}
-                                        <div class="w-4 h-0.5 bg-white/20 rounded-full"></div>
-                                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-lg border-4 border-white/30 shadow-[0_0_20px_rgba(255,255,255,0.1)]" 
-                                             style="background: {$gameStore.currentColor}"></div>
+                                        <div class="w-4 h-0.5 bg-white/10 rounded-full"></div>
+                                        <div class="flex flex-col items-center gap-3">
+                                            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-lg border-4 border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.15)]" 
+                                                style="background: {$gameStore.currentColor}"></div>
+                                            <span class="font-mono text-xl opacity-20">4</span>
+                                        </div>
                                     </div>
                                 {:else}
                                     <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white/10 shadow-[0_0_40px_rgba(255,255,255,0.05)]" 
