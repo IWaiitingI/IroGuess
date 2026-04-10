@@ -159,10 +159,22 @@
                         <div class="flex flex-col items-center gap-12 w-full animate-in fade-in duration-700">
                             <div class="flex flex-col items-center gap-4">
                                 <p class="text-[10px] uppercase tracking-[0.5em] text-white/30">
-                                    {$gameStore.currentMode === 'whos_next' ? 'The next color was' : 'Couleur Cible'}
+                                    {$gameStore.currentMode === 'whos_next' ? 'The complete sequence' : 'Target Color'}
                                 </p>
-                                <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white/10 shadow-[0_0_40px_rgba(255,255,255,0.05)]" 
-                                     style="background: {$gameStore.currentColor}"></div>
+                                
+                                {#if $gameStore.currentMode === 'whos_next' && $gameStore.sequenceColors}
+                                    <div class="flex gap-3 sm:gap-4 items-center scale-90 sm:scale-100">
+                                        {#each $gameStore.sequenceColors as color}
+                                            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-lg border border-white/10" style="background: {color}"></div>
+                                        {/each}
+                                        <div class="w-4 h-0.5 bg-white/20 rounded-full"></div>
+                                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-lg border-4 border-white/30 shadow-[0_0_20px_rgba(255,255,255,0.1)]" 
+                                             style="background: {$gameStore.currentColor}"></div>
+                                    </div>
+                                {:else}
+                                    <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white/10 shadow-[0_0_40px_rgba(255,255,255,0.05)]" 
+                                         style="background: {$gameStore.currentColor}"></div>
+                                {/if}
                             </div>
 
                             <div class="w-full h-px bg-white/5"></div>
