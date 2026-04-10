@@ -66,7 +66,7 @@
         </div>
 
         {#if $gameStore.subStatus === "pick" && $gameStore.timerEnd}
-            {@const maxTime = $gameStore.currentMode === "bombs_ticking" ? 4 : 10}
+            {@const maxTime = $gameStore.currentMode === "bombs_ticking" ? 4 : 20}
             {@const color = $gameStore.currentMode === "bombs_ticking" ? 'bg-red-600' : 'bg-white/40'}
             <div class="fixed right-6 sm:right-12 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2 animate-in slide-in-from-right duration-300">
                 <div class="w-1 h-64 bg-white/5 rounded-full relative overflow-hidden">

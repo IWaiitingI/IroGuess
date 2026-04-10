@@ -7,13 +7,12 @@
     goto(`/room/${id}`);
   }
 
-  // Classe réutilisable pour tes boutons
   const btnClass = "w-full py-3 text-center text-sm tracking-widest border border-white/20 hover:border-white/60 hover:bg-white/5 transition-all rounded-sm uppercase";
 </script>
 
 <main class="flex flex-col items-center gap-12">
   <div class="flex flex-col items-center gap-3">
-    <h1 class="text-6xl font-bold tracking-tight">color.</h1>
+    <h1 class="text-6xl font-bold tracking-tight">IroGuess</h1>
     <p class="text-white/40 text-sm">Crush your friend,... or at least try...</p>
   </div>
 
