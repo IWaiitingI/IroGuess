@@ -7,8 +7,9 @@
     base: "flex gap-1",
     variants: {
       variant: {
-        default: "[&>div]:bg-yellow [&>div]:border-white",
-        secondary: "[&>div]:bg-black [&>div]:border-black",
+        // Remplacement du bg par yellow-400 et border par white
+        default: "[&>div]:bg-yellow-400 [&>div]:border-white",
+        secondary: "[&>div]:bg-black [&>div]:border-white",
         outline: "[&>div]:bg-transparent [&>div]:border-white",
       },
       size: {
@@ -63,7 +64,8 @@
 
 <style>
   .pixel-bounce {
-    border-radius: 0;
+    /* Suppression du radius pour garder l'aspect pixel/carré */
+    border-radius: 0; 
     animation-name: pixel-bounce;
     animation-iteration-count: infinite;
     animation-timing-function: steps(1);
