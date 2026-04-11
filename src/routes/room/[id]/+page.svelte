@@ -2,6 +2,7 @@
     import { page } from '$app/stores';
     import { gameStore, gameActions } from '$lib/stores/game';
     import ColorPicker from '$lib/components/game/ColorPicker.svelte';
+    import Loader from '$lib/components/ui/Loader.svelte'; // Assure-toi de créer ce fichier (voir plus bas)
     import { onDestroy } from 'svelte';
 
     const roomId = $page.params.id;
@@ -33,6 +34,11 @@
         hasJoined && $gameStore 
         ? Object.keys($gameStore.players).find(id => $gameStore.players[id].name === name) 
         : null
+    );
+
+    // Détection si le joueur local a déjà répondu
+    let hasAnswered = $derived(
+        myPlayerId && $gameStore?.players[myPlayerId]?.answer !== null
     );
 
     onDestroy(() => gameActions.leave());
@@ -80,7 +86,7 @@
         <main class="mt-32 w-full flex flex-col items-center">
             {#if $gameStore.status === "waiting"}
                 <div class="text-center space-y-8">
-                    <p class="text-white/40 animate-pulse uppercase text-xs tracking-[0.3em]">You don't have more friend ?</p>
+                    <p class="text-white/40 animate-pulse uppercase text-xs tracking-[0.3em]">You don't have any more friends than that ?</p>
                     <button onclick={gameActions.start} class="{btnClass} py-4 px-12">Let's play !</button>
                 </div>
 
@@ -108,7 +114,7 @@
                         <div class="flex flex-col items-center gap-12 py-4 animate-in zoom-in duration-300">
                             {#if $gameStore.currentMode === 'whos_next' && $gameStore.sequenceColors}
                                 <div class="flex flex-col items-center gap-6">
-                                    <p class="text-xs uppercase tracking-[0.3em] text-blue-400">Use your brain, if you  can...</p>
+                                    <p class="text-xs uppercase tracking-[0.3em] text-blue-400">Use your brain, if you can...</p>
                                     <div class="flex gap-4 sm:gap-6 items-center">
                                         {#each $gameStore.sequenceColors as color, i}
                                             <div class="flex flex-col items-center gap-3">
@@ -128,31 +134,40 @@
                                 <div class="w-64 h-64 rounded-full shadow-[0_0_50px_rgba(255,255,255,0.1)] scale-110" 
                                      style="background: {$gameStore.currentColor}">
                                 </div>
-                                <p class="text-sm uppercase tracking-[0.4em] animate-pulse italic">Don't stare at me like that</p>
+                                <p class="text-sm uppercase tracking-[0.4em] animate-pulse italic">Don't stare at me like that !</p>
                             {/if}
                         </div>
 
                     {:else if $gameStore.subStatus === "pick"}
                         <div class="flex flex-col items-center gap-8 w-full animate-in fade-in duration-300">
-                            {#if $gameStore.currentMode === 'whos_next'}
-                                <div class="flex flex-col items-center gap-4 mb-4">
-                                    <p class="text-[10px] uppercase tracking-[0.3em] text-blue-500/60">Rappel de la suite</p>
-                                    <div class="flex gap-4 items-center">
-                                        {#each $gameStore.sequenceColors as color}
-                                            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-lg border border-white/20 shadow-lg" 
-                                                 style="background: {color}"></div>
-                                        {/each}
-                                        <div class="w-4 h-0.5 bg-white/20 rounded-full"></div>
-                                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-lg border-2 border-dashed border-blue-500 flex items-center justify-center text-2xl text-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.2)]">?</div>
+                            {#if !hasAnswered}
+                                {#if $gameStore.currentMode === 'whos_next'}
+                                    <div class="flex flex-col items-center gap-4 mb-4">
+                                        <p class="text-[10px] uppercase tracking-[0.3em] text-blue-500/60">Rappel de la suite</p>
+                                        <div class="flex gap-4 items-center">
+                                            {#each $gameStore.sequenceColors as color}
+                                                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-lg border border-white/20 shadow-lg" 
+                                                     style="background: {color}"></div>
+                                            {/each}
+                                            <div class="w-4 h-0.5 bg-white/20 rounded-full"></div>
+                                            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-lg border-2 border-dashed border-blue-500 flex items-center justify-center text-2xl text-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.2)]">?</div>
+                                        </div>
                                     </div>
-                                </div>
+                                {:else}
+                                    <div class="w-20 h-20 rounded-full border border-white/10 flex items-center justify-center opacity-20">
+                                        <span class="text-2xl">?</span>
+                                    </div>
+                                {/if}
+                                <ColorPicker onSelect={(color) => gameActions.sendAnswer(color)} />
                             {:else}
-                                <div class="w-20 h-20 rounded-full border border-white/10 flex items-center justify-center opacity-20">
-                                    <span class="text-2xl">?</span>
+                                <div class="flex flex-col items-center gap-6 py-20 animate-in zoom-in duration-500">
+                                    <div class="text-center space-y-2">
+                                        <p class="text-xs uppercase tracking-[0.4em] text-white/50">Answer sent</p>
+                                        <p class="text-[10px] uppercase tracking-[0.2em] text-white/20">Waiting for others...</p>
+                                    </div>
+                                    <Loader size="lg" duration={0.6} />
                                 </div>
                             {/if}
-                            
-                            <ColorPicker onSelect={(color) => gameActions.sendAnswer(color)} />
                         </div>
 
                     {:else if $gameStore.subStatus === "review"}
@@ -223,7 +238,6 @@
 </div>
 
 <style>
-    /* Correction pour s'assurer que Tailwind charge les animations fade-in/out */
     :global(.animate-in) {
         animation-fill-mode: both;
     }
