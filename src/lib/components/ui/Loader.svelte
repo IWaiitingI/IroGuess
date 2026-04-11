@@ -7,7 +7,7 @@
     base: "flex gap-1",
     variants: {
       variant: {
-        default: "[&>div]:bg-white [&>div]:border-white",
+        default: "[&>div]:bg-yellow [&>div]:border-white",
         secondary: "[&>div]:bg-black [&>div]:border-black",
         outline: "[&>div]:bg-transparent [&>div]:border-white",
       },
