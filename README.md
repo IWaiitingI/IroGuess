@@ -31,6 +31,8 @@ IroGuess est un jeu de précision chromatique en temps réel (inspiré entre aut
 * **Ambiance Sonore** : Tic-tac pour le mode bombe et feedback sonore de validation.
 * **Mode Blind** : Sliders gris sans repères visuels pour la phase de sélection.
 * **Interractions et animations** : Célébration visuelle pour le gagnant final, transition et design de l'UI.
+* **Amelioration des sliders** : Rendre la selection des couleurs plus visuelle.
+* **Tutorial** : Faire un tutoriel concis et interactif.
 
 ---
 
