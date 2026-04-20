@@ -50,7 +50,7 @@
   {#if !hasJoined}
     <div class="flex flex-col items-center gap-10 mt-40 animate-in fade-in zoom-in duration-500">
       <h1 class="text-5xl font-black tracking-widest uppercase italic text-white drop-shadow-[6px_6px_0px_#facc15]">
-        How do I call you?
+        How should I call you?
       </h1>
       <div class="flex flex-col items-center gap-8">
         <input
@@ -150,7 +150,7 @@
                   <div class="flex flex-col items-center gap-10 py-20">
                     <div class="text-center space-y-4">
                       <p class="text-green-500 text-xl font-black uppercase tracking-widest">Answer sent</p>
-                      <p class="text-[10px] uppercase tracking-[0.2em] text-white/20 italic">Waiting for others...</p>
+                      <p class="text-[10px] uppercase tracking-[0.2em] text-white/20 italic">Slow down, they can't keep up...</p>
                     </div>
                     <Loader size="lg" duration={0.4} count={4} />
                   </div>
@@ -199,7 +199,7 @@
     {#if $gameStore.status === "results"}
       <div class="fixed inset-0 bg-black/90 z-50 flex flex-col items-center justify-center gap-12 animate-in fade-in duration-500">
         <h2 class="text-7xl font-black italic tracking-tighter uppercase text-white drop-shadow-[6px_6px_0px_#facc15]">
-          Like a true winner
+          Such a epic fight !
         </h2>
         <div class="bg-white/5 p-10 border-l-8 border-yellow-400 w-full max-w-md shadow-2xl">
           <div class="space-y-6">
@@ -214,7 +214,7 @@
           </div>
         </div>
         <button onclick={gameActions.start} class="{btnClass} text-xl px-16 py-6">
-          I want more
+          Give me some more
         </button>
       </div>
     {/if}
