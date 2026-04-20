@@ -28,10 +28,6 @@
   </div>
 
   <div class="flex flex-col gap-6 w-72">
-    
-    <a href="/solo" class="{btnClass} bg-transparent border-2 border-white text-white shadow-[4px_4px_0px_rgba(255,255,255,0.2)] hover:bg-white/10">
-      [ 1 ] Solo Mode
-    </a>
 
     <button onclick={createRoom} class="{btnClass} bg-yellow-400 text-black border-b-4 border-r-4 border-yellow-700 shadow-none">
       [ 2 ] Multiplayer

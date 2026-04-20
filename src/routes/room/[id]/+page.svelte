@@ -8,10 +8,21 @@
   import PlayerList from '$lib/components/game/PlayerList.svelte';
   import Loader from '$lib/components/ui/Loader.svelte';
   import { onDestroy } from 'svelte';
+  
 
   const roomId = $page.params.id;
   let name = $state("");
   let hasJoined = $state(false);
+
+  let copied = $state(false);
+
+  function copyRoomLink() {
+    const url = `${window.location.origin}/room/${roomId}`;
+    navigator.clipboard.writeText(url).then(() => {
+      copied = true;
+      setTimeout(() => (copied = false), 2000);
+    });
+  }
 
   const btnClass = "group relative px-10 py-4 bg-yellow-400 text-black border-b-4 border-r-4 border-yellow-700 active:border-0 active:translate-y-1 active:translate-x-1 transition-all uppercase font-bold text-sm tracking-[0.2em]";
 
@@ -75,9 +86,23 @@
             <p class="text-white/40 animate-pulse uppercase text-sm tracking-[0.5em]">
               You don't have any more friends than that ?
             </p>
-            <button onclick={gameActions.start} class="{btnClass} text-xl px-20 py-6">
-              Let's play !
-            </button>
+            <div class="flex flex-col items-center gap-4">
+              <button onclick={gameActions.start} class="{btnClass} text-xl px-20 py-6">
+                Let's play !
+              </button>
+              <button
+                onclick={copyRoomLink}
+                class="px-10 py-3 border border-white/20 hover:border-white/60 text-white/40 hover:text-white/80 transition-all uppercase tracking-[0.3em] text-xs font-bold flex items-center gap-3"
+              >
+                {#if copied}
+                  <span class="text-green-400">✓</span>
+                  <span class="text-green-400">Link copied !</span>
+                {:else}
+                  <span>⎘</span>
+                  Copy Room Link
+                {/if}
+              </button>
+            </div>
           </div>
 
         {:else if $gameStore.status === "playing"}
