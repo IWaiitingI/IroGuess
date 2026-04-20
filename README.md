@@ -1,7 +1,6 @@
 # In Progress...
 # IroGuess - Multijoueur
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
 ## Jouer en ligne
 **Lien du jeu :** [https://iroguess.vercel.app](https://iro-guess.vercel.app/))
